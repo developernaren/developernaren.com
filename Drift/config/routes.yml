@@ -1,4 +1,6 @@
 # Routes
 default:
-  path: /
+  path: /{page?}
   controller: App\Controller\DefaultController
+  defaults:
+    page: index
