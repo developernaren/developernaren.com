@@ -4,10 +4,8 @@ namespace App\Domain;
 
 use React\Filesystem\Filesystem;
 use React\Promise\Deferred;
-use React\Promise\FulfilledPromise;
 use React\Promise\PromiseInterface;
 use League\CommonMark\GithubFlavoredMarkdownConverter;
-use React\Promise\RejectedPromise;
 
 class FileResolver
 {
