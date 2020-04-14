@@ -1,0 +1,4 @@
+# Routes
+default:
+  path: /
+  controller: App\Controller\DefaultController
