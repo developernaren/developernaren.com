@@ -5,11 +5,13 @@ WORKDIR /var/www
 #
 # Apisearch installation
 #
+
 COPY . .
-RUN composer install -n --prefer-dist --no-dev --no-suggest && \
+RUN composer global require hirak/prestissimo && \
+    composer install -n --prefer-dist --no-dev --no-suggest && \
     composer dump-autoload -n --no-dev --optimize
 
 COPY docker/* /
 
-EXPOSE 8000
+EXPOSE 8080
 CMD ["sh", "/server-entrypoint.sh"]
