@@ -8,7 +8,7 @@ WORKDIR /var/www
 
 COPY . .
 RUN composer global require hirak/prestissimo && \
-    composer install -n --prefer-dist --no-dev --no-suggest && \
+    cd /var/www && composer install -n --prefer-dist --no-dev --no-suggest && \
     composer dump-autoload -n --no-dev --optimize
 
 COPY docker/* /

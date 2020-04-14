@@ -15,9 +15,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Drift\Kernel;
+use React\Filesystem\Filesystem;
 use React\Promise\FulfilledPromise;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Class DefaultController.
@@ -26,15 +30,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DefaultController
 {
-    /**
-     * Default path.
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, Filesystem $filesystem, KernelInterface $kernel)
     {
-        return new FulfilledPromise(
-            new JsonResponse([
-                'message' => 'DriftPHP is working!',
-            ], 200)
-        );
+        return $filesystem->getContents($kernel->getProjectDir() . '/Drift/views/index.html')
+            ->then(function ($content){
+                return new Response($content);
+            });
     }
 }
