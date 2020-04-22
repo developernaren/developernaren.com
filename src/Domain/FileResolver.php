@@ -5,7 +5,6 @@ namespace App\Domain;
 use React\Filesystem\Filesystem;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
-use League\CommonMark\GithubFlavoredMarkdownConverter;
 
 class FileResolver
 {
@@ -19,33 +18,20 @@ class FileResolver
         $this->filesystem = $filesystem;
     }
 
-
-    public function toHtml(): PromiseInterface
+    public function getFilename(): PromiseInterface
     {
         $deferred = new Deferred();
-
         $filename = $this->filename . '.html';
-
         $this->filesystem->file($filename)
             ->exists()
             ->then(function () use ($filename, &$deferred) {
-                return $this->filesystem->getContents($filename)
-                    ->then(function ($c) use (&$deferred) {
-                        if (!empty($c)) {
-                            $deferred->resolve($c);
-                        }
-                    });
+                $deferred->resolve($filename);
             }, function () use (&$deferred) {
                 $filename = $this->filename . '.md';
-                return $this->filesystem->getContents($filename)
-                    ->then(function ($c) use (&$deferred) {
-                        if (!empty($c)) {
-                            $converter = new GithubFlavoredMarkdownConverter([
-                                'html_input' => 'strip',
-                                'allow_unsafe_links' => false,
-                            ]);
-                            $deferred->resolve($converter->convertToHtml($c));
-                        }
+                return $this->filesystem->file($filename)
+                    ->exists()
+                    ->then(function ($c) use (&$deferred, $filename) {
+                        $deferred->resolve($filename);
                     }, function () use (&$deferred) {
                         $deferred->resolve('');
                     });
