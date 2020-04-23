@@ -8,6 +8,7 @@ use App\Domain\ContentParser;
 use App\Domain\FileReader;
 use App\Domain\FileResolver;
 use App\Domain\MetaParser;
+use App\Domain\Page;
 use React\Filesystem\Filesystem;
 use React\Filesystem\Node\File;
 use React\Promise\FulfilledPromise;
@@ -30,9 +31,8 @@ class DefaultController
         return $contentParser->getMetaInfo()->then(function (MetaParser $meta) use($filesystem, $kernel){
             $layoutReader = new FileReader($filesystem, $kernel->getProjectDir() . '/Drift/views/layouts/' . $meta->getLayout());
             return $layoutReader->getContent()->then(function ($layoutContent) use ($meta){
-                $pageContent = str_replace('{content}', $meta->getBody(), $layoutContent);
-                $pageContent = str_replace('{title}', $meta->getTitle(), $pageContent);
-                return new Response($pageContent);
+                $pageContent = new Page($meta, $layoutContent);
+                return new Response($pageContent->toHtml());
             });
         });
 
