@@ -27,15 +27,17 @@ class ContentParser
     public function getMetaInfo(): PromiseInterface
     {
         return $this->getContent()->then(function ($content){
-            $endOfMeta = strpos($content, 'end>>');
-            $parser =  new MetaParser(substr($content, 7, ($endOfMeta-8)));
-            return $parser->getLayout();
+
+            $endOfMeta = strpos($content, '</draft>');
+            $metaContent = substr($content, 7, ($endOfMeta-8));
+            $body = substr($content, $endOfMeta + 8);
+
+            return new MetaParser($metaContent, $body);
         });
     }
 
     public function getHtml(): PromiseInterface
     {
-
         $isMd =  strpos($this->reader->getFilename(), '.md') !== false;
         $content =  $this->getContent();
 

@@ -7,7 +7,11 @@ namespace App\Controller;
 use App\Domain\ContentParser;
 use App\Domain\FileReader;
 use App\Domain\FileResolver;
+use App\Domain\MetaParser;
 use React\Filesystem\Filesystem;
+use React\Filesystem\Node\File;
+use React\Promise\FulfilledPromise;
+use React\Tests\Filesystem\ArgsExceptionTraitTest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,30 +21,46 @@ class DefaultController
 {
     public function __invoke(Request $request, Filesystem $filesystem, KernelInterface $kernel)
     {
-        $layoutFile = $kernel->getProjectDir() . '/Drift/views/layouts/index.html';
         $routeParams = $request->attributes->get('_route_params');
-        $layoutReader = new FileReader($filesystem, $layoutFile);
+        $fileResolver = new FileResolver($filesystem, $kernel->getProjectDir() . '/Drift/views/' . $routeParams['page']);
+        $filename = $kernel->getProjectDir() . '/Drift/views/' . $routeParams['page'] .'.html';
+        $reader = new FileReader($filesystem, $filename);
+        $contentParser = new ContentParser($reader);
 
-        return $layoutReader->getContent()
-            ->then(function ($layoutContent) use ($filesystem, $kernel, $routeParams) {
-
-                $fileResolver = new FileResolver($filesystem, $kernel->getProjectDir() . '/Drift/views/' . $routeParams['page']);
-                return $fileResolver
-                    ->getFilename()
-                    ->then(function ($filename) use ($filesystem, $layoutContent) {
-                        $reader = new ContentParser(new FileReader($filesystem, $filename));
-                        return $reader->getHtml()
-                            ->then(function ($content) use($layoutContent) {
-                                $statusCode = 200;
-//                        if (empty($content)) {
-//                            $statusCode = 404;
-//                            $content = 'Sorry, I feel defeated. I tried to find what you are looking for. Believe me I tried.';
-//                        }
-
-                                return new Response(str_replace('{content}', $content, $layoutContent), $statusCode);
-                            });
-                    });
+        return $contentParser->getMetaInfo()->then(function (MetaParser $meta) use($filesystem, $kernel){
+            $layoutReader = new FileReader($filesystem, $kernel->getProjectDir() . '/Drift/views/layouts/' . $meta->getLayout());
+            return $layoutReader->getContent()->then(function ($layoutContent) use ($meta){
+                $pageContent = str_replace('{content}', $meta->getBody(), $layoutContent);
+                $pageContent = str_replace('{title}', $meta->getTitle(), $pageContent);
+                return new Response($pageContent);
             });
+        });
+
+//        $layoutFile = $kernel->getProjectDir() . '/Drift/views/layouts/index.html';
+//        $routeParams = $request->attributes->get('_route_params');
+//        $layoutReader = new FileReader($filesystem, $layoutFile);
+//
+//
+//        return $layoutReader->getContent()
+//            ->then(function ($layoutContent) use ($filesystem, $kernel, $routeParams) {
+//
+//                $fileResolver = new FileResolver($filesystem, $kernel->getProjectDir() . '/Drift/views/' . $routeParams['page']);
+//                return $fileResolver
+//                    ->getFilename()
+//                    ->then(function ($filename) use ($filesystem, $layoutContent) {
+//                        $reader = new ContentParser(new FileReader($filesystem, $filename));
+//                        return $reader->getHtml()
+//                            ->then(function ($content) use($layoutContent) {
+//                                $statusCode = 200;
+////                        if (empty($content)) {
+////                            $statusCode = 404;
+////                            $content = 'Sorry, I feel defeated. I tried to find what you are looking for. Believe me I tried.';
+////                        }
+//
+//                                return new Response(str_replace('{content}', $content, $layoutContent), $statusCode);
+//                            });
+//                    });
+//            });
 
     }
 }
