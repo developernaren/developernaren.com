@@ -10,10 +10,6 @@ use App\Domain\FileResolver;
 use App\Domain\MetaParser;
 use App\Domain\Page;
 use React\Filesystem\Filesystem;
-use React\Filesystem\Node\File;
-use React\Promise\FulfilledPromise;
-use React\Tests\Filesystem\ArgsExceptionTraitTest;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -28,13 +24,32 @@ class DefaultController
         $reader = new FileReader($filesystem, $filename);
         $contentParser = new ContentParser($reader);
 
-        return $contentParser->getMetaInfo()->then(function (MetaParser $meta) use($filesystem, $kernel){
-            $layoutReader = new FileReader($filesystem, $kernel->getProjectDir() . '/Drift/views/layouts/' . $meta->getLayout());
-            return $layoutReader->getContent()->then(function ($layoutContent) use ($meta){
-                $pageContent = new Page($meta, $layoutContent);
-                return new Response($pageContent->toHtml());
+        $cacheFile = $kernel->getProjectDir() . '/Drift/views/cache/' . $routeParams['page'] . '.html';
+
+
+        return $filesystem->getContents($cacheFile)
+            ->then(function ($content) {
+                return new Response($content);
+
+            }, function () use($contentParser, $filesystem, $kernel, $cacheFile){
+                return $contentParser->getMetaInfo()->then(function (MetaParser $meta) use($filesystem, $kernel, $cacheFile){
+                    $layoutReader = new FileReader($filesystem, $kernel->getProjectDir() . '/Drift/views/layouts/' . $meta->getLayout());
+                    return $layoutReader->getContent()->then(function ($layoutContent) use ($meta, $filesystem, $cacheFile){
+                        $pageContent = new Page($meta, $layoutContent);
+
+                        $filesystem->file($cacheFile)
+                            ->open('cwt')
+                            ->then(function ($stream) use($pageContent) {
+                            $stream->end($pageContent->toHtml());
+                        });
+
+                        return new Response($pageContent->toHtml());
+                    });
+                });
             });
-        });
+
+
+
 
 //        $layoutFile = $kernel->getProjectDir() . '/Drift/views/layouts/index.html';
 //        $routeParams = $request->attributes->get('_route_params');

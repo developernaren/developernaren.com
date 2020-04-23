@@ -2,3 +2,5 @@ vendor
 .php_cs.cache
 composer.lock
 var
+!/Drift/views/cache/.gitkeep
+Drift/views/cache/
