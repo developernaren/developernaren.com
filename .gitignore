@@ -4,3 +4,4 @@ composer.lock
 var
 !/Drift/views/cache/.gitkeep
 Drift/views/cache/
+/**/*.cache

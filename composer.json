@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.4",
         "symfony/console": "^5.0.0",
         "symfony/framework-bundle": "^5.0.0",
         "symfony/dotenv": "^5.0.0",

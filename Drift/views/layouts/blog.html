@@ -3,96 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{title}</title>
-    <meta name="description" content="Free open source Tailwind CSS Minimalistic monochrome blog template">
-    <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,blog template, blog layout, minimal, monochrome, minimalistic, theme">
+    <meta name="author" content="David Grzyb">
+    <meta name="description" content="">
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
-
-    <meta name="msapplication-TileColor" content="#00aba9">
-    <meta name="theme-color" content="#3b7977">
-
-<!--    &lt;!&ndash; Primary Meta Tags &ndash;&gt;-->
-<!--    <title>Tailwind Toolbox - Free Starter Templates and Components for Tailwind CSS</title>-->
-<!--    <meta name="title" content="Tailwind Toolbox - Free Starter Templates and Components for Tailwind CSS">-->
-<!--    <meta name="description" content="Free open source Tailwind CSS starter Templates and Components to get you started quickly to creating websites in Tailwind CSS!">-->
-
-<!--    &lt;!&ndash; Open Graph / Facebook &ndash;&gt;-->
-<!--    <meta property="og:type" content="website">-->
-<!--    <meta property="og:url" content="https://www.tailwindtoolbox.com/">-->
-<!--    <meta property="og:title" content="Tailwind Toolbox - Free Starter Templates and Components for Tailwind CSS">-->
-<!--    <meta property="og:description" content="Free open source Tailwind CSS starter Templates and Components to get you started quickly to creating websites in Tailwind CSS!">-->
-<!--    <meta property="og:image" content="https://www.tailwindtoolbox.com/social.png">-->
-
-<!--    &lt;!&ndash; Twitter &ndash;&gt;-->
-<!--    <meta property="twitter:card" content="summary_large_image">-->
-<!--    <meta property="twitter:url" content="https://www.tailwindtoolbox.com/">-->
-<!--    <meta property="twitter:title" content="Tailwind Toolbox - Free Starter Templates and Components for Tailwind CSS">-->
-<!--    <meta property="twitter:description" content="Free open source Tailwind CSS starter Templates and Components to get you started quickly to creating websites in Tailwind CSS!">-->
-<!--    <meta property="twitter:image" content="https://www.tailwindtoolbox.com/social.png">-->
-
-
-    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet"> <!--Replace with your tailwind.css once created-->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
-
+    <!-- Tailwind -->
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        .nunito {
-            font-family: 'Nunito', sans-serif;
-        }
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
 
-        ::selection {
-            background: #E9D8FD;
-            /* WebKit/Blink Browsers */
-        }
-
-        ::-moz-selection {
-            background: #E9D8FD;
-            /* Gecko Browsers */
-        }
-
-        a:not(.nav) {
-            font-weight: bold;
-            text-decoration: none;
-            padding: 2px;
-            background: linear-gradient(to right, #5A67D8, #5A67D8);
-            background-repeat: repeat-x;
-            background-size: 100% 2px;
-            background-position: 0 95%;
-            -webkit-transition: all 150ms ease-in-out;
-            -moz-transition: all 150ms ease-in-out;
-            -ms-transition: all 150ms ease-in-out;
-            -o-transition: all 150ms ease-in-out;
-            transition: all 150ms ease-in-out;
-        }
-
-        a:hover {
-            color: #B794F4;
-            font-weight: bold;
-            text-decoration: none;
-            padding-bottom: 2px;
-            background: linear-gradient(to right, #9F7AEA, #E9D8FD);
-            background-repeat: repeat-x;
-            background-size: 100% 2px;
-            background-position: 50% 95%;
-            -webkit-transition: color 150ms ease-in-out;
-            -moz-transition: color 150ms ease-in-out;
-            -ms-transition: color 150ms ease-in-out;
-            -o-transition: color 150ms ease-in-out;
-            transition: color 150ms ease-in-out;
-        }
-
-        a:focus {
-            outline: none;
-            background: #E9D8FD;
+        .font-family-karla {
+            font-family: karla;
         }
     </style>
 
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+            integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
 </head>
+<body class="bg-white font-family-karla">
 
-<body class="bg-gray-900 text-gray-700 font-sans nunito">
+<!-- Top Bar Nav -->
+<nav class="w-full py-4 bg-blue-800 shadow">
+    <div class="w-full container mx-auto flex flex-wrap items-center justify-between">
 
-{content}
+        <nav>
+            <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
+                <li><a class="hover:text-gray-200 hover:underline px-4" href="/">Home</a></li>
+                <li><a class="hover:text-gray-200 hover:underline px-4" href="/blogs">Blogs</a></li>
+            </ul>
+        </nav>
+
+        <div class="flex items-center text-lg no-underline text-white pr-6">
+            <a class="" href="#">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a class="pl-6" href="#">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a class="pl-6" href="#">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a class="pl-6" href="#">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+    </div>
+
+</nav>
+
+<!-- Text Header -->
+<header class="w-full container mx-auto">
+    <div class="flex flex-col items-center py-12">
+        <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="#">
+            {title}
+        </a>
+        <p class="text-lg text-gray-600">
+            {description}
+        </p>
+    </div>
+</header>
+
+<div class="container mx-auto flex flex-wrap py-6">
+    <section class="w-full flex flex-col px-3 markdown-body">
+        {content}
+    </section>
+    <div class="w-full flex flex-col text-center md:text-left md:flex-row shadow bg-white mt-10 mb-10 p-6">
+        <div class="w-full md:w-1/5 flex justify-center md:justify-start pb-4">
+            <img src="/public/me.jpg" class="rounded-full shadow h-32 w-32">
+        </div>
+        <div class="flex-1 flex flex-col justify-center md:justify-start">
+            <p class="font-semibold text-2xl">Narendra Chitrakar</p>
+            <p class="pt-2">.</p>
+            <div class="flex items-center justify-center md:justify-start text-2xl no-underline text-blue-800 pt-4">
+                <a class="" href="#">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a class="pl-4" href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a class="pl-4" href="#">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a class="pl-4" href="#">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>
