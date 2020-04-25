@@ -1,23 +1,53 @@
-# DriftPHP Skeleton
+# Draft
 
-Welcome to the skeleton of DriftPHP. In this small repository you will find an
-extraordinary way of starting using DriftPHP and ReactPHP in your projects. Just
-install it, load dependencies, and you will be ready to start building fast and
-insane applications on top of Symfony and ReactPHP components.
+Draft is a PHP static site creator written in [Driftphp](https://driftphhp.io). This is running my personal blog https://developernaren.com
 
-<p align="center">
-  <img src="public/driftphp.png">
-</p>
+## Ugh!? Another static site generator!? why?? and that in PHP??
+I have been working in PHP for more than 10 years. I have worked with nodejs and golang in few of those years. 
+I always felt like PHP was put down as a starter language which people learn to get into programming. 
+After few years in PHP, people would be pressured intto learning a "better" language. Even though I worked with nodejs and golang, PHP always felt the most comfortable to me.
+When I heard about [reactphp](https://reactphp.org/), I wanted to get into it as soon as I could, but there were no starter template of sorts to get started.
+With Driftphp, I felt there finally is a framework that I can comfortably start working with it.
 
-Some first steps for you!
+## Enough complaining! Tell me how it works.
+Alright, Alright. Draft is a static site generator. It can parse `.html` and `.md` files and generate a fully html page. 
+It supports `html` layouts and content can be either `html` and `md` files.
 
-- [Go to DOCS](https://driftphp.io)
-- [Try a demo](https://github.com/driftphp/demo)
+### `<draft>`
+We include meta for post in a `<draft>` tag. Currently it supports
+  
+- layout
+- title
+- description
+    
+    Example
+    ```
+    <draft>
+        title: This is a ttest
+        description: This is the description
+        layout: blog.html
+    </draft>
+    ```
+Refer to this file for [example](/Drift/views/blogs/index.html) 
+## Todos
 
-you can check out packages as well.
+- [ ] Refactor to make it adaptable
+- [ ] Tests
+- [ ] Cache Support
+- [ ] Build process to generate static html pages
+- Configurable
+    - Options
+        - [ ] Base Route
+        - [ ] Layout path
+        - [ ] Cache Path and driver
+        - [ ] Better Seo support
+        - [ ] Hot reload for md changes
+        
+I feel like there is only so much a static site generator should be able to do, but feel free to add things you would like to see here.
+        
+ 
 
-- [DBAL adapter](https://github.com/driftphp/dbal-bundle)
-- [Redis adapter](https://github.com/driftphp/redis-bundle)
-- [Twig adapter](https://github.com/driftphp/twig-bundle)
-- [AMQP adapter](https://github.com/driftphp/amqp-bundle)
-- [Websockets adapter](https://github.com/driftphp/websocket-bundle)
+
+
+
+
