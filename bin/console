@@ -43,4 +43,5 @@ $kernel
      ->set('reactphp.event_loop', EventLoopFactory::create());
 
 $application = new Application($kernel);
+
 $application->run($input);
