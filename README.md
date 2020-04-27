@@ -5,7 +5,7 @@ Draft is a PHP static site creator written in [Driftphp](https://driftphhp.io). 
 ## Ugh!? Another static site generator!? why?? and that in PHP??
 I have been working in PHP for more than 10 years. I have worked with nodejs and golang in few of those years. 
 I always felt like PHP was put down as a starter language which people learn to get into programming. 
-After few years in PHP, people would be pressured intto learning a "better" language. Even though I worked with nodejs and golang, PHP always felt the most comfortable to me.
+After few years in PHP, people would be pressured into learning a "better" language. Even though I worked with nodejs and golang, PHP always felt the most comfortable to me.
 When I heard about [reactphp](https://reactphp.org/), I wanted to get into it as soon as I could, but there were no starter template of sorts to get started.
 With Driftphp, I felt there finally is a framework that I can comfortably start working with it.
 
