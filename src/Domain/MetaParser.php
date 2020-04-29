@@ -37,8 +37,15 @@ class MetaParser
         return $this->getKey('description');
     }
 
-    private function getKey($key): ?string
+    public function getKey($key): ?string
     {
         return $this->finalCollection[$key] ?? null;
+    }
+
+    public function getExtraMetas(): array
+    {
+        $extraMetas = $this->finalCollection;
+        unset($extraMetas['layout']);
+        return  $this->finalCollection;
     }
 }

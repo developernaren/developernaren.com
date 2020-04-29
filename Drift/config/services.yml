@@ -24,3 +24,11 @@ services:
         resource : "%app_path%/src/Controller/*"
         tags:
             - {name: controller.service_arguments}
+
+    App\Commands\PageBuilder:
+        tags:
+            - {name: console.command}
+    App\Commands\CopyImages:
+        tags:
+            - {name: console.command}
+

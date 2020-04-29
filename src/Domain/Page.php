@@ -20,6 +20,7 @@ class Page
     public function toHtml(): string
     {
         $content = $this->parser->getBody();
+
         if(strpos($this->filename, '.md')) {
             $converter = new GithubFlavoredMarkdownConverter([
                 'html_input' => 'strip',
@@ -28,16 +29,13 @@ class Page
             $content = $converter->convertToHtml($content);
         }
 
-        $replaces = [
-            '{title}' => $this->parser->getTitle(),
-            '{description}' => $this->parser->getDescription(),
-            '{content}' => $content,
-        ];
+        $content = str_replace('{content}', $content, $this->layoutContent);
 
-        $content = $this->layoutContent;
-        foreach ($replaces as $key => $replace) {
-            $content = str_replace($key, $replace, $content);
+        foreach ($this->parser->getExtraMetas() as $key => $meta) {
+            $key = '{'. $key .'}';
+            $content = str_replace($key, $meta, $content);
         }
+
 
         return  $content;
     }
